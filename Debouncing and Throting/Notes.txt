@@ -1,0 +1,3 @@
+Debouncing:
+It delays the execution until events stops for a period
+only last call runs 

@@ -1,0 +1,19 @@
+Promise.all takes an array of promised as arg and return a new promise
+the new promise resolve when all the listed promises are resolved and the
+array of their results become its result
+
+Promise.all() either gives me the results of all the fulfilled promised in an array
+or the fist rejected promise
+
+
+
+2. 
+Promise.allSettled just wair for all promises to settle regardless of its result
+(unlike promise.all() which stops as soon ad a promise is rejected )
+
+
+3. 
+Promise.race gives me the first promise that settles ( that is it does not care if the promise fullfilled or rejected)
+
+4.
+Promise.any gives me the result of 1st promise that resolves or fullfills 

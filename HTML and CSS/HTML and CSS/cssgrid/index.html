@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .dashboard{
+            display: grid;
+            /* grid-template-columns: 100px; */
+            /* grid-template-columns: 1fr 1fr; */
+            /* grid-template-columns: repeat(2, 200px); */
+            /* grid-template-columns: minmax(200px, 1fr) 1fr 1fr; */
+
+
+            /* grid-template-rows: 100px 100px 100px; */
+            /* grid-template-rows: 1fr 2fr 3fr; */
+            /* grid-template-rows: repeat(3, 1fr); */
+            
+            height: 200px;
+            gap: 10px;
+        }
+        .top{background-color: red;}
+        .side{background-color: green;}
+        .main{background-color: yellow;}
+        .stats{background-color: rebeccapurple;}
+        .footer{background-color: aqua;}
+
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="top">Top</div>
+        <div class="side">Side</div>
+        <div class="main">Main</div>
+        <div class="stats">Stats</div>
+        <div class="footer">Footer</div>
+    </div>
+    
+</body>
+</html>

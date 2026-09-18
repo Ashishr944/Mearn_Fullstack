@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box-containers{
+            border : 2px solid black;
+            display: flex;
+            gap: 10px;
+            /* flex-direction: column; */
+            height: 500px;
+
+            /* align-items: start; 
+            align-items: center;
+            align-items: end; */
+            
+           align-items: center;
+           flex-wrap: wrap;
+           /* item stay in one line and if three is not enough space they move to the next line */
+
+
+            /* flex-direction: column; */
+
+            /* justify-content: center; */
+            /* justify-content: right; */
+            /* justify-self: end; */
+            /* justify-content: space-between; */
+            /* justify-content: space-evenly; */
+            /* justify-content: space-around; */
+        }
+        .box{
+            background-color: red;
+            color: green;
+            padding: 100px;
+            border-radius: 8px;
+            height: fit-content;
+            width: fit-content;
+        }
+        .box1{
+            /* align-self: center; */
+            /* this overrides align- tem for special item */
+            flex-grow: 1;
+        }
+        .box2{
+            flex-grow: 1;
+        }
+        .box3{
+            flex-grow: 1;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="box-containers">
+        <div class="box box1">Box 1</div>
+        <div class="box box2">Box 2</div>
+        <div class="box box3">Box 3</div>
+    </div>
+
+</body>
+</html>
+
+<!-- 
+flex in css is used for arranging elements in row or column and 
+controling the spacing and alignment of these elements 
+w/o flex arranging item in a page requeries a lot of etras css
+main axix : the direction in which the item are layedour
+cross axix : perpendicular to main axis;
+
+
+/* justify-content: center; */-> item at center
+/* justify-content: right; */ -> item at beginnig
+/* justify-self: end; */-> item at end
+/* justify-content: space-between; */ -> spread across the axis
+/* justify-content: space-evenly; */-> spread across the axix with even spaces everywhere
+/* justify-content: space-around; */-> spread across the axis with even space in between and some at endges
+
+
+align-items: start;  alline children in cross axis
+align-items: center;
+align-items: end;
+
+
+
+default(row) : main axis is left to right and cross axix in top
+to botttom.
+
+fles-direction: column: main exix is top to bottom and cross axis in the top bottom.
+
+flex- direction ;  mqin xix is top to bottom and cross axix in left ot right
+
+
+Note: to center a div you only need 4 things in its parent
+1.display: fles;
+2. justify-content: center;
+3. align-item: center;
+ -->

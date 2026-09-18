@@ -1,0 +1,952 @@
+Question 1: Event Loop in JavaScript — 10 Marks
+Answer:
+
+JavaScript is a single-threaded, synchronous programming language, which means it executes one piece of code at a time. However, JavaScript can also handle asynchronous operations such as timers, API calls, and promises using the Event Loop.
+
+The Event Loop coordinates the Call Stack, Web APIs, Callback Queue, and Microtask Queue.
+
+1. Call Stack
+
+The Call Stack keeps track of the functions currently being executed.
+
+function greet() {
+    console.log("Hello");
+}
+
+greet();
+
+First, greet() is added to the Call Stack. Its console.log() executes, and then the function is removed from the stack.
+
+2. Web APIs
+
+Browser environments provide Web APIs for asynchronous operations such as:
+
+setTimeout()
+fetch()
+DOM events
+HTTP requests
+
+For example:
+
+setTimeout(() => {
+    console.log("Hello");
+}, 1000);
+
+The timer is handled by the browser rather than blocking the JavaScript Call Stack.
+
+3. Callback/Task Queue
+
+When an asynchronous operation such as setTimeout() finishes, its callback is placed into the Task Queue (Callback Queue).
+
+The callback waits there until the Call Stack becomes empty.
+
+4. Microtask Queue
+
+Promises use the Microtask Queue.
+
+For example:
+
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+
+The .then() callback goes into the Microtask Queue.
+
+Microtasks have higher priority than normal tasks such as setTimeout() callbacks.
+
+5. Event Loop
+
+The Event Loop continuously checks whether the Call Stack is empty.
+
+When the Call Stack becomes empty:
+
+JavaScript executes all available microtasks.
+After microtasks are completed, it takes a callback from the Task/Callback Queue.
+That callback is pushed onto the Call Stack and executed.
+The process continues.
+Example
+console.log("A");
+
+setTimeout(() => {
+    console.log("B");
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("C");
+});
+
+console.log("D");
+
+Output:
+
+A
+D
+C
+B
+Execution order
+Synchronous Code
+       ↓
+   Call Stack
+       ↓
+Microtask Queue
+       ↓
+Task/Callback Queue
+       ↓
+   Call Stack
+Important Rule
+
+Synchronous code → Microtasks/Promises → Macrotasks/Timers
+
+Therefore, even if setTimeout(..., 0) is used, its callback does not execute immediately. It waits until the current synchronous code and pending microtasks have finished.
+
+Question 2: Predict the Output
+2(a) — 5 Marks
+
+Corrected code:
+
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+Promise.resolve().then(() => {
+    console.log("D");
+});
+
+console.log("E");
+Output:
+A
+E
+C
+D
+B
+Why?
+A → synchronous
+E → synchronous
+C → Promise microtask
+D → Promise microtask
+B → setTimeout task
+
+So:
+
+A → E → C → D → B
+
+2(b) — 5 Marks
+
+Corrected code:
+
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timeout 1");
+
+    Promise.resolve().then(() => {
+        console.log("Promise inside Timeout");
+    });
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("Promise 1");
+});
+
+console.log("End");
+Output:
+Start
+End
+Promise 1
+Timeout 1
+Promise inside Timeout
+Execution order:
+"Start" → synchronous
+"End" → synchronous
+"Promise 1" → microtask
+setTimeout() executes → "Timeout 1"
+Promise created inside the timer becomes a microtask
+"Promise inside Timeout" executes
+
+So:
+
+Start → End → Promise 1 → Timeout 1 → Promise inside Timeout
+
+2(c) — 5 Marks
+
+Corrected code:
+
+console.log("A");
+
+Promise.resolve().then(() => {
+    console.log("B");
+
+    Promise.resolve().then(() => {
+        console.log("C");
+    });
+});
+
+setTimeout(() => console.log("D"), 0);
+
+console.log("E");
+Output:
+A
+E
+B
+C
+D
+Execution order:
+A → synchronous
+E → synchronous
+First Promise → B
+Promise created inside the first Promise → C
+setTimeout() → D
+
+So:
+
+A → E → B → C → D
+
+Final Answers to Memorize
+Question	Output
+2(a)	A → E → C → D → B
+2(b)	Start → End → Promise 1 → Timeout 1 → Promise inside Timeout
+2(c)	A → E → B → C → D
+
+
+
+2(d) — 5 Marks
+
+Your code has some formatting/OCR errors. The intended code appears to be:
+
+console.log("1");
+
+Promise.resolve().then(() => {
+    console.log("2");
+
+    setTimeout(() => {
+        console.log("3");
+    }, 0);
+});
+
+setTimeout(() => console.log("4"), 0);
+
+console.log("5");
+Output
+1
+5
+2
+4
+3
+Reason
+1 → synchronous
+5 → synchronous
+2 → Promise microtask
+4 → first timer in the task queue
+3 → timer was created inside the Promise, so it comes after the already-queued timer 4
+
+Final order: 1 → 5 → 2 → 4 → 3
+
+Question 3: Fetch Data with Loading and Error Handling — 20 Marks
+Complete Exam-Ready Code
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Data</title>
+</head>
+<body>
+
+    <h2>Users</h2>
+
+    <p id="loading"></p>
+    <p id="error"></p>
+    <ul id="list"></ul>
+
+    <script>
+        const loading = document.getElementById("loading");
+        const error = document.getElementById("error");
+        const list = document.getElementById("list");
+
+        async function fetchData() {
+
+            loading.textContent = "Loading...";
+            error.textContent = "";
+            list.innerHTML = "";
+
+            try {
+                const response = await fetch(
+                    "https://jsonplaceholder.typicode.com/users"
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+
+                const data = await response.json();
+
+                loading.textContent = "";
+
+                data.forEach(user => {
+                    const li = document.createElement("li");
+                    li.textContent = user.name;
+                    list.appendChild(li);
+                });
+
+            } catch (err) {
+                loading.textContent = "";
+                error.textContent = "Error: " + err.message;
+            }
+        }
+
+        fetchData();
+    </script>
+
+</body>
+</html>
+Three States
+
+Loading state:
+
+Loading...
+
+Success state:
+
+The fetched users are displayed in the <ul>.
+
+Error state:
+
+Error: Failed to fetch data
+Important points for the exam
+fetch() sends the request.
+await response.json() converts the response to JSON.
+response.ok checks HTTP success.
+try...catch handles errors.
+Loading is displayed before the request.
+Data is displayed after successful response.
+Error message is displayed if the request fails.
+Question 4: Function Methods and Promise APIs — 10 Marks
+
+The Promise methods are:
+
+Promise.allSettled()
+Promise.any()
+Promise.race()
+1. Promise.allSettled()
+
+Promise.allSettled() waits for all promises to finish, regardless of whether they are fulfilled or rejected.
+
+Example
+const p1 = Promise.resolve("Success 1");
+
+const p2 = Promise.reject("Error");
+
+const p3 = Promise.resolve("Success 2");
+
+Promise.allSettled([p1, p2, p3])
+    .then(result => {
+        console.log(result);
+    });
+Output
+[
+    { status: "fulfilled", value: "Success 1" },
+    { status: "rejected", reason: "Error" },
+    { status: "fulfilled", value: "Success 2" }
+]
+Use case
+
+When we want the result of every operation, even if some operations fail.
+
+2. Promise.any()
+
+Promise.any() returns the result of the first successfully fulfilled promise.
+
+Rejected promises are ignored until all promises are rejected.
+
+Example
+const p1 = Promise.reject("Error 1");
+
+const p2 = new Promise(resolve => {
+    setTimeout(() => resolve("Success 2"), 1000);
+});
+
+const p3 = new Promise(resolve => {
+    setTimeout(() => resolve("Success 3"), 500);
+});
+
+Promise.any([p1, p2, p3])
+    .then(result => {
+        console.log(result);
+    });
+Output
+Success 3
+
+Because p3 is the first promise to successfully resolve.
+
+Use case
+
+When we need the first successful response from multiple sources.
+
+3. Promise.race()
+
+Promise.race() returns the result of the first promise to settle, whether fulfilled or rejected.
+
+Example
+const p1 = new Promise(resolve => {
+    setTimeout(() => resolve("First"), 1000);
+});
+
+const p2 = new Promise(resolve => {
+    setTimeout(() => resolve("Second"), 500);
+});
+
+Promise.race([p1, p2])
+    .then(result => {
+        console.log(result);
+    });
+Output
+Second
+
+Because p2 settles first.
+
+Difference to remember
+Method	What it waits for
+Promise.allSettled()	All promises finish
+Promise.any()	First fulfilled promise
+Promise.race()	First settled promise
+Question 5: Throttling and Debouncing — 10 Marks
+1. Throttling
+Definition
+
+Throttling ensures that a function executes at most once during a specified time interval, even if the event occurs many times.
+
+Example
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>Throttling Example</h2>
+
+    <p id="output"></p>
+
+    <script>
+        function throttle(func, delay) {
+            let lastTime = 0;
+
+            return function () {
+                const currentTime = Date.now();
+
+                if (currentTime - lastTime >= delay) {
+                    func();
+                    lastTime = currentTime;
+                }
+            };
+        }
+
+        function handleScroll() {
+            document.getElementById("output").textContent =
+                "Scroll event executed at " + new Date().toLocaleTimeString();
+        }
+
+        const throttledScroll = throttle(handleScroll, 1000);
+
+        window.addEventListener("scroll", throttledScroll);
+    </script>
+
+</body>
+</html>
+Practical use case
+
+Scroll events.
+
+Scrolling can generate many events per second. Throttling prevents expensive operations from executing continuously.
+
+Other examples:
+
+Mouse movement
+Window resizing
+Game controls
+API requests triggered by continuous events
+2. Debouncing
+Definition
+
+Debouncing delays execution of a function until the event has stopped occurring for a specified amount of time.
+
+Every new event resets the timer.
+
+Example
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>Debouncing Example</h2>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search..."
+    >
+
+    <p id="output"></p>
+
+    <script>
+        function debounce(func, delay) {
+            let timer;
+
+            return function () {
+                clearTimeout(timer);
+
+                timer = setTimeout(() => {
+                    func();
+                }, delay);
+            };
+        }
+
+        function searchData() {
+            const value = document.getElementById("search").value;
+
+            document.getElementById("output").textContent =
+                "Searching for: " + value;
+        }
+
+        const debouncedSearch = debounce(searchData, 500);
+
+        document
+            .getElementById("search")
+            .addEventListener("input", debouncedSearch);
+    </script>
+
+</body>
+</html>
+Practical use case
+
+Search box/autocomplete.
+
+If the user types:
+
+J
+Ja
+Jav
+Java
+
+instead of making four API calls, debouncing waits until the user stops typing and then makes one call.
+
+
+| Throttling                      | Debouncing                      |
+| ------------------------------- | ------------------------------- |
+| Executes at regular intervals   | Executes after events stop      |
+| Function can execute repeatedly | Function executes after a pause |
+| Good for continuous events      | Good for user input             |
+| Example: scrolling              | Example: search box             |
+| Limits execution frequency      | Delays execution                |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Event Bubbling
+
+Event bubbling is the process in which an event starts from the target element and propagates upward through its parent elements.
+
+The order is:
+
+Child → Parent → Grandparent → Document
+Example
+<div id="parent">
+    <button id="child">Click Me</button>
+</div>
+
+<script>
+    document.getElementById("parent").addEventListener("click", () => {
+        console.log("Parent clicked");
+    });
+
+    document.getElementById("child").addEventListener("click", () => {
+        console.log("Button clicked");
+    });
+</script>
+
+When the button is clicked:
+
+Button clicked
+Parent clicked
+
+The event first occurs on the button and then bubbles up to the parent.
+
+Stopping bubbling
+document.getElementById("child").addEventListener("click", (event) => {
+    event.stopPropagation();
+});
+
+stopPropagation() prevents the event from propagating further.
+
+2. Event Capturing
+
+Event capturing is the opposite direction of bubbling.
+
+The event travels from the outermost parent toward the target element.
+
+The order is:
+
+Document → Parent → Child
+Example
+<div id="parent">
+    <button id="child">Click Me</button>
+</div>
+
+<script>
+    document.getElementById("parent").addEventListener(
+        "click",
+        () => {
+            console.log("Parent");
+        },
+        true
+    );
+
+    document.getElementById("child").addEventListener("click", () => {
+        console.log("Button");
+    });
+</script>
+
+Output:
+
+Parent
+Button
+
+The third argument true enables capturing.
+
+element.addEventListener("click", handler, true);
+3. Event Delegation
+
+Event delegation is a technique where we attach a single event listener to a parent element instead of adding separate listeners to every child.
+
+It works mainly because of event bubbling.
+
+Example
+<ul id="list">
+    <li>Apple</li>
+    <li>Banana</li>
+    <li>Orange</li>
+</ul>
+
+<script>
+    document.getElementById("list").addEventListener("click", (event) => {
+        if (event.target.tagName === "LI") {
+            console.log("Clicked:", event.target.textContent);
+        }
+    });
+</script>
+
+If we click Banana:
+
+Clicked: Banana
+Advantages
+Fewer event listeners
+Better performance
+Works with dynamically added elements
+Cleaner code
+Difference
+Concept	Direction/Purpose
+Bubbling	Child → Parent
+Capturing	Parent → Child
+Delegation	Parent handles events for children
+Question 7: Classes and Constructor Functions — 10 Marks
+Classes in JavaScript
+
+A class is a blueprint for creating objects. It allows us to group properties and methods together.
+
+Example
+class Student {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    display() {
+        console.log(this.name, this.age);
+    }
+}
+
+const s1 = new Student("Ashish", 22);
+
+s1.display();
+
+Output:
+
+Ashish 22
+Constructor
+
+The constructor() method is automatically called when an object is created using new.
+
+const s1 = new Student("Ashish", 22);
+
+Here:
+
+new → creates object
+constructor() → initializes object
+Constructor Functions
+
+Before ES6 classes, constructor functions were commonly used to create objects.
+
+Example
+function Student(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+Student.prototype.display = function () {
+    console.log(this.name, this.age);
+};
+
+const s1 = new Student("Ashish", 22);
+
+s1.display();
+
+| Classes                                 | Constructor Functions            |
+| --------------------------------------- | -------------------------------- |
+| Introduced in ES6                       | Traditional JavaScript approach  |
+| Uses `class` keyword                    | Uses normal function             |
+| Uses `constructor()`                    | Uses function body               |
+| Methods are defined inside class        | Methods commonly use `prototype` |
+| Easier and cleaner syntax               | More traditional syntax          |
+| Supports `extends` and `super` directly | Inheritance uses prototypes      |
+
+
+
+
+
+
+
+
+Question 8: OOP and Its Principles in JavaScript — 10 Marks
+What is OOP?
+
+Object-Oriented Programming (OOP) is a programming approach where programs are designed using objects.
+
+An object contains:
+
+Properties → data/state
+Methods → behavior/functions
+Example
+const student = {
+    name: "Ashish",
+    age: 22,
+
+    study() {
+        console.log("Student is studying");
+    }
+};
+
+console.log(student.name);
+student.study();
+
+Here:
+
+name, age → properties
+study()   → method
+Why is OOP Used?
+
+OOP is used to:
+
+Organize large applications
+Reuse code
+Reduce code duplication
+Improve maintainability
+Protect data
+Model real-world entities
+Make applications easier to extend
+
+JavaScript supports OOP using:
+
+Objects
+Classes
+Constructor functions
+Prototypes
+Inheritance
+Encapsulation
+Four Main Principles of OOP
+
+The four major principles are:
+
+1. Encapsulation
+2. Abstraction
+3. Inheritance
+4. Polymorphism
+1. Encapsulation
+
+Encapsulation means combining data and methods into a single unit and controlling access to internal data.
+
+JavaScript supports private class fields using #.
+
+Example
+class BankAccount {
+    #balance = 0;
+
+    deposit(amount) {
+        if (amount > 0) {
+            this.#balance += amount;
+        }
+    }
+
+    getBalance() {
+        return this.#balance;
+    }
+}
+
+const account = new BankAccount();
+
+account.deposit(500);
+
+console.log(account.getBalance());
+
+Output:
+
+500
+
+This will not work:
+
+account.#balance;
+
+because #balance is private.
+
+Benefit
+
+Encapsulation protects internal data and prevents unwanted direct modification.
+
+2. Abstraction
+
+Abstraction means hiding unnecessary implementation details and exposing only the required functionality.
+
+Example
+class Car {
+    start() {
+        this.#startEngine();
+        console.log("Car started");
+    }
+
+    #startEngine() {
+        console.log("Engine started");
+    }
+}
+
+const car = new Car();
+
+car.start();
+
+The user only needs to call:
+
+car.start();
+
+They don't need to know how the internal engine-starting process works.
+
+Benefit
+
+Abstraction reduces complexity and makes code easier to use.
+
+3. Inheritance
+
+Inheritance allows one class to acquire properties and methods from another class.
+
+JavaScript uses extends for class inheritance.
+
+Example
+class Animal {
+    eat() {
+        console.log("Animal is eating");
+    }
+}
+
+class Dog extends Animal {
+    bark() {
+        console.log("Dog is barking");
+    }
+}
+
+const dog = new Dog();
+
+dog.eat();
+dog.bark();
+
+Output:
+
+Animal is eating
+Dog is barking
+
+Here:
+
+Animal
+   ↓
+ Dog
+
+Dog inherits the eat() method from Animal.
+
+Benefit
+
+Inheritance promotes code reuse and reduces duplication.
+
+4. Polymorphism
+
+Polymorphism means "many forms."
+
+It allows different objects/classes to implement the same method differently.
+
+Example
+class Animal {
+    sound() {
+        console.log("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    sound() {
+        console.log("Dog barks");
+    }
+}
+
+class Cat extends Animal {
+    sound() {
+        console.log("Cat meows");
+    }
+}
+
+const dog = new Dog();
+const cat = new Cat();
+
+dog.sound();
+cat.sound();
+
+Output:
+
+Dog barks
+Cat meows
+
+Both classes have the same method:
+
+sound()
+
+but each provides a different implementation.
+
+Benefit
+
+Polymorphism makes code flexible and allows the same interface/method to work differently for different objects.
+| Principle         | Meaning                         | JavaScript Example               |
+| ----------------- | ------------------------------- | -------------------------------- |
+| **Encapsulation** | Protect and bundle data         | `#balance`                       |
+| **Abstraction**   | Hide implementation details     | `start()` hides `#startEngine()` |
+| **Inheritance**   | Reuse properties/methods        | `extends`                        |
+| **Polymorphism**  | Same method, different behavior | `Dog.sound()` / `Cat.sound()`    |
+
+
+Encapsulation: Wrapping data and methods together while controlling access to the data.
+
+Abstraction: Hiding internal implementation details and showing only essential functionality.
+
+Inheritance: Creating a new class that reuses properties and methods of an existing class.
+
+Polymorphism: Allowing the same method or interface to have different implementations.

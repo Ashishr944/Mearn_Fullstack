@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            height: 200px;
+            width: 400px;
+            background-color: pink;
+            padding: 20px;
+            border: 10px solid black;
+            margin: 30px;
+            /* box-sizing: border-box; */
+            box-sizing: content-box;
+
+        }
+        /* 
+        content: things inside the box 
+        padding: space btween content and dorder
+        margin: the line surrrounding padding and conten
+        margin: space outise the boder*/
+        .box2{
+            height: 200px;
+            width: 200px;
+            background-color: red;
+            display: block;
+            margin-right: 20px;
+
+        }
+        /* content box: the final size depends ont he padding and 
+        (its added ouside the box)
+        border box : the fina; size  includes the padding and border */
+
+        /*  disply bloxk:
+        start on a new line takes full width by default
+        width and height can be set
+        
+        deiplsy inline:
+        stays in the same line, width and height does not apply, used for short pieces of text.
+        
+        display: inline-block:
+        stays in line and you can assign height and width.
+        
+        display: none
+        removes from DOM*/
+
+
+        /* button{
+            height: 100px;
+            width: 100px;
+            font: optional;
+            font-size: 10px;
+            font: 600; */
+            /* how to make circle inside the css: border readius: 50% */
+            /* border-radius: 50%;
+            padding: 30px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+
+        }  
+         */
+        /* .parent{
+            height: 100px;
+            width: 100;
+            background-color: red;
+            position:relative;
+            top: 100px; ;
+            /* bottom: ; */
+            /* left: 100px;
+            right: -100px;
+        } */
+        /* .child{
+            height: 50px;
+            width: 50px;
+            background-color: aqua;
+            position: absolute;
+            left: 50px;
+            top: 50px;
+
+        } */ 
+        
+        /* postion static: default value, element stays in normal position
+        postion relative: element moves relative to its normal position(original position is reserved)
+        position fixed: stay on the same place while scrollin
+        position sticky: scrolls to a fixed position while scrolling */
+
+       :root{
+        --primary-color: red ;
+        --text-color: black;
+        --card-redius: 12px;
+        --spacing: 16px;
+       }
+
+       button{
+        padding: var(--spacing);
+        background-color: var(--primary-color);
+       }
+
+
+        /*  */
+    </style>
+</head>
+<body>
+    <!-- <h1>adsfgg</h1> -->
+    <!-- <div class="box"></div>
+    <div class="box2"></div>
+    <button> click</button> -->
+
+<!-- 
+    <div class="parent">
+        <div class="child"></div>
+    </div> -->
+
+
+    <botton> click me</botton>
+</body>
+</html>

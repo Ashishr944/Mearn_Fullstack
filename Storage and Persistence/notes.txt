@@ -1,0 +1,73 @@
+storing values in local storage
+syntax :localStorage.setItem(<key>,<value>)
+eg. localStorage.setItem('name', 'Ashish'); 
+
+fetching values in local storage
+let value = localStorage.getItem('name');
+console.log(value); 
+
+
+
+Reset values in localstorage
+localStorage.setItem("name2", "");
+
+
+//Managing local storage
+// Removing a specific key values pair from localSorage
+localStorage.removeItem("name2");
+localStorage.setItem("name2", "asdfg");
+localStorage.setItem("name3", "fagddf");
+
+
+
+Removing all your key values pairs from localStorage
+localStorage.clear();
+
+
+Security and scope of Local Storage
+LocalStorage 
+-> its a browser storage given to a website that allows persistant key value pairs with no expiration time
+-> Data survies when browser restarts and is accessible accross all  tabs/windows of the "smae origin"
+
+
+Data allow to be stored to local Storage
+chrome, firefox, edge -> 10MB data
+safari -> 5MB 
+
+// How to check the local storage in Local Storage
+if(navigator.storage && navigaton.storage.estimate){
+    navigator.storage.estimate().then(est => {
+        console.log(`Used: ${est.usage} of ${est.quota} bytes`);
+    })
+}
+
+
+
+JSON method to store Item
+localStorage.setItem("array", JSON.stringify([1,2,3,4]));
+localStorage.setItem("object", JSON.stringify([{name:"Ashish"}]));
+localStorage.setItem("object", JSON.stringify(4));
+
+DOM content loded execution script
+// The below script only run when the document has been loaded
+
+document.addEventListener("DOMContentLoaded", ()=> {
+    console.log(JSON.parse(localStorage.getItem("number")));
+    console.log(JSON.parse(localStorage.getItem("array")));
+    console.log(JSON.parse(localStorage.getItem("object"))); 
+})
+
+
+
+
+
+
+* Session Storage->
+persists -> until tabs/window is closed
+scope : single tab
+storage limit : 5 -10 MB
+use case: temporary session data
+
+Note : both local and session storage can survies a reload
+eg. sessionStorage.setItem("Name", "Ashish);
+

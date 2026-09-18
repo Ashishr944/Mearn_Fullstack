@@ -1,0 +1,40 @@
+1. js runs strictly on a single thread (that is perforrms 1 task at a time) but it is able to perforrms
+    anync operations because of the runtime environment (browser or Node.js is multiple thread)
+    JS does not handle time consuming tasks like network requests, timers, filesystem etc on its own thread, it delegates these tasks to hosting environments, which handles them in background.
+
+
+2. Callstack -> this tracks what function is currently executing.
+     It handles sync code on the single main thread, following LIFO(last in first out) structure
+
+3. Web API's/ Node.js API's -> these are background environment provided by the browser or Node.js they run seprate
+    native threads to handle tasks like fetch(), setTimeout() etc   
+    once the background API is completed its task it moves the attached callack function to its respective queue
+
+
+4. Macro task queue -> handles large pieces of work eg setTimeout, setInterval, UI rendering events etc.
+
+5. Micro task queue -> handles smaller and urgent task that need ro run imediately
+
+Micro task queue has more preference than macro task queue -> callack inside macro task will wait until everything inside micro task queue has completed its execution
+
+
+
+
+6. EventLoop -> carries out the whole process by checking continously if the call stack is empty or not
+
+
+
+Starvatation -> in the below code setTimeout will be inside that macrotask queue waitin/ starving for microtask queue to be empty 
+    but it wonts in the below example as again keep getting added inside you microtask queue
+
+Example:
+    console.log(1)
+    function again(){
+        Promise.resolve().then(again)
+    }
+    again()
+
+    setTimeout(() => {
+        console.log("Timer")
+    });
+    console.log(2)

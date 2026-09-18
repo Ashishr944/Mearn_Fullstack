@@ -1,0 +1,32 @@
+Dom -> to do list
+take input from user and display
+
+
+local storage session storage
+
+
+constructor
+
+
+
+
+Async practical implementation
+promises 
+
+
+
+Data fetching API and real APIs
+fetch method and axios 
+
+
+POST, PUT AND DELETE
+
+Promise method and parellel operations thory and practical
+
+
+Debouncing and throtelling learn code
+
+
+Event loop task and microtask
+
+create form

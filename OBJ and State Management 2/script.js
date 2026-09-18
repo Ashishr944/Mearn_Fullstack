@@ -1,0 +1,107 @@
+// this -> it refers to the object or the context where the currrent code is executing
+
+// let obj = {
+//     name : "Ashish",
+//     a : 5,
+//     b : 6,
+//     greet: function(){
+//         console.log("Hello " + this.name)
+//         // console.log(this.name)
+
+//     },
+//     sum : function(){
+//         console.log(this.a + this.b);
+//     },
+//     mul(){
+//         console.log(this.a * this.b);
+//     }
+
+// }
+// obj.greet(); // Hello Ashish
+// obj.sum(); // 11
+// obj.mul(); // 30
+
+
+
+
+// this keyword target the parent obj
+// function func(){
+//     console.log(this)
+// }
+// func();
+
+
+// let obj = {
+//     name : "Ashish",
+//     obj1 : {
+//         name : "raju",
+
+//         func1(){
+//             console.log(this);
+//         }
+//     }
+// }
+// obj.obj1.func1(); // raju
+
+
+
+// function func(){
+//     console.log(this.name);
+// }
+// let obj1 = {
+//     name : "Ashish",
+//     greet: func
+// }
+// let obj2 = {
+//     name : "sourav",
+//     greet : func
+// }
+// obj1.greet();
+// obj2.greet();
+
+
+// // call bind apply
+// In JS call bind apply are built in methods used to 
+// explicitely set the execution context that is sets the "this" inside a function
+// in simple words -> they allow us to borrow the this of an object to be used inside a function 
+
+
+// const person1 = {
+//     name : "Amit",
+//     age: 30
+// }
+// const person2 = {
+//     name : "Neha",
+//     age : 24
+// }
+
+// function introduce(city, country){
+//     return `${this.name} is ${this.age} years old from ${city}, ${country}` 
+// }
+
+// // call();
+// console.log(introduce.call(person1, "pune", "India"));
+
+// // apply();
+// console.log(introduce.apply(person2, ["Goa", "India"]));
+
+// // bind();
+// const introducePersone1 = introduce.bind(person1);
+// console.log(introducePersone1("Pune","India"))
+
+
+
+
+
+
+const counter = {
+    count : 0,
+    increment: function(){
+        this.count++;
+        console.log(this.count)
+    }
+}
+counter.increment();
+
+let func = counter.increment.bind(counter);
+func()

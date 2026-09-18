@@ -1,0 +1,3 @@
+Post-> Creating data in DB
+Put -> Updating a perticular field in DB
+Delete -> Delete data in DB

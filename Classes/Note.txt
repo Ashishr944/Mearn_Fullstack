@@ -1,0 +1,52 @@
+Note : the methods created inside your class are automatically assigned inside the Protoype
+
+* Protoype and contructor function
+-> Each object instance created using contructor func gets its own instacne copy of every method 
+-> this can be memory- insufficient if you create 100's of objects
+-> Protoype allows us to share methods accross all instance without duplicating them.
+
+
+
+
+
+* Classes
+-> classes in js are template for creating objects.
+-> they encapsulate data and behavior into a single structure
+
+* Getters and setters
+->Getters and setters are special methods that allows controlled access to properties getters retrieve values setters modify them
+-> they are accessed like properties and not methods
+
+* StaticMethods
+-> static methods bwlong to the class itself, not to instance
+-> they are called on the class and not on objects
+
+
+*  private fields
+-> Private fields are written with # prefix and can only be accessed inside the class
+-> they provide true encapsulation
+
+
+*****OOPS*****
+// Encapsulation
+is data hiding implemetation details and exposing only necessary interfaces
+-> Private fiels enforces true encapsulation by making fields genuinly inaccessible from outside
+
+
+// Inheritance
+
+super(): the super() keyword calls the parent contructor and must be called before accessing this child class
+
+
+
+
+// 4 OOPS concepts
+1. Encapsulation - is hiding implemetation details and exposing only necessary inheritance.
+    ->private fields enforces true encapsulation by making filed genuinely inaccessible from outside
+
+2. Inheritance -> allows classs to reuse code from parent classes by inheriting their properties
+
+3. Abstaction -> Abstraction hides complex implemetation details and exposed the necessary functionality 
+
+4.Polymorphism-> Method overriding
+-> Allows object of different classes to be treated as obj's of a common parent class while maitainig their specific behavior

@@ -1,0 +1,18 @@
+// There can only be 1 export default in the script file
+    eg: export default User
+
+
+Named import shold be the same name mentioned in the export
+    eg: import{ printAge, printName}from "./script.js";
+
+If you want to use custom name:
+    eg: import {printAge as somethingFromScript, printName} from "./script.js"
+
+
+
+If the export is default you can give it any name
+    Import somethingFromScript from "./script.js";
+    Eg;
+    import User from "./script.js";
+
+

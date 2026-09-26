@@ -1,0 +1,35 @@
+    // when you have multiple atribute
+    console.log(searchParams.getAll('sort'))
+
+
+
+
+
+
+    / to get all parameter in the url
+    // for(const [key, value] of searchParams.entries()){
+    //     console.log(key, value);
+    // }
+
+
+
+
+
+
+lazy -provide callBACK FUNCTION
+
+
+
+Home page:
+1. fetch data from APi and store it in local storage
+1. Creage unique buttons for UserId (there will be 10 buttons) try to do this dynamically wotherwise hard code it
+3. if i click on the bellow boto
+<button>
+1
+<button>
+it would be redirect to post/1
+
+
+post page:
+fetch data from local storage
+2. show all the posts from that UserId

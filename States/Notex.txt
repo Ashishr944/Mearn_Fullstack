@@ -1,0 +1,64 @@
+-> We saw that when we try to update a value using normal Js variables the value gets updated but it is not reflected on the screen thisnis because the component is not re-rendering
+
+-> Unlike the normal HTML, JS when we update here the whole page re-renders this causes a lot of issues as components and parts which do not need re-render also re-render
+
+-> React fixed this issues by only re-rendering that component which need to update
+
+-> This is where State comes in:
+    State is component memory, its special data that
+    1. Triggers a re-render of that component when it chnges(Solving the Screen update problem)
+    2. Persist between renders
+
+
+
+In React, State updates or not immediate
+->  When you call a setState, you are scheduling an update for the next render inside your current render, 
+    the state value don't change 
+-> If you log the value inside the eventhandler you will always get the same value
+
+
+
+
+#Hooks
+-> Hooks are special funcions that let you "hook into" react feactures 
+-> We had class component before but then we transtioned into funcion components
+-> Hooks play mazor role in making function components functional
+
+
+
+# Rules of Hooks
+-> 1.Only Call hooks at the top of the function components
+        a. not inside a loop, conditins, nested function, try catch, event handlers etc
+-> 2. Only call inside your function component 
+
+
+
+Lazy Initialization 
+-> function will run as soon as the component renders(and only then) this is useful when you have to do any heavy computation to calculate the initial State
+-> Like rendering from local storage of fetching data
+
+-> As we can see react doues not allow us to directly update the state multiple times in the same handler
+    this is done so that the amount of component renders could be limited for better optimization
+
+
+-> but what happens when we update the states multiple times -> 
+    to solve this the setState function has as argument that keep tracks of the previous value
+
+
+
+Note: 
+->If the next value of state depends on the previous value always go with prev arga in setState
+    this will help you avoid unnecessary renders and keep state in code and UI in sync
+
+
+
+
+// Batching
+even tho the state is updated 5 times but component only renders 1 time
+this is known ans Batching, in batching react ->
+// 1. waits untill your event handlers finishes
+// 2. gathers all your state updates
+// 3. Applies them in one render
+
+
+1: 05: 57

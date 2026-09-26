@@ -13,8 +13,6 @@
 //     const filterData = data.filter(
 //         (item) => item.title === "reprehenderit est deserunt velit ipsam" // print specific data by filter 
 //     );
-
-
 //     filterData.forEach((item) => {
 //         const li = document.createElement("li"); // create li element
 //         li.textContent = item.url; // add element in list 
@@ -22,6 +20,7 @@
 //     });
 // }
 // fetchData();
+
 
 
 
@@ -49,21 +48,45 @@
 // }
 
 
+// const list = document.getElementById("list");
+// async function fetchData(){
+//     try{
+//         const source = await fetch("https://jsonplaceholder.typicode.com/photos")
+//         const data = await source.json();
+//         console.log(data);
+//         render(data);
+//     }
+//     catch(err){
+//         console.log("error");
+//     }
+// }
+// fetchData();
+// function render(data){
+//     const filterData = data.filter((item) => item.albumId === 1)
+//     filterData.forEach(item => {
+//         const li = document.createElement("li");
+//         li.textContent = item.title;
+//         list.appendChild(li);
+//     });
+// }
+
+
 const list = document.getElementById("list");
-async function fetchData(){
+async function fetchData() {
     try{
-        const source = await fetch("https://jsonplaceholder.typicode.com/photos")
+        const source = await fetch("https://jsonplaceholder.typicode.com/photos");
         const data = await source.json();
         console.log(data);
-        render(data);
+        render();
+
     }
-    catch(err){
+    catch{
         console.log("error");
     }
 }
-fetchData();
+fetchData()
 function render(data){
-    const filterData = data.filter((item) => item.albumId === 1)
+    const filterData = data.filter((item) => item.albumId === 1);
     filterData.forEach(item => {
         const li = document.createElement("li");
         li.textContent = item.title;

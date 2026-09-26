@@ -4,22 +4,17 @@
 // ->
 // function debounce(callback, delay) {
 //     let timer;
-
 //     return function (...args) {
 //         clearTimeout(timer);
-
 //         timer = setTimeout(() => {
 //             callback(...args);
 //         }, delay);
 //     };
 // }
-
 // function search(event) {
 //     console.log("Searching:", event.target.value);
 // }
-
 // const searchInput = document.getElementById("search");
-
 // searchInput.addEventListener(
 //     "input",
 //     debounce(search, 500)
@@ -92,32 +87,14 @@
 //         }
 //     };
 // }
-
 // function handleClick(){
 //     output.textContent = "Button clicked at " + new Date().toLocaleDateString();
 //     console.log("Function executed");
 // }
-
 // btn.addEventListener(
 //     "click",
 //     throttle(handleClick, 2000)
 // );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

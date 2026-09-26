@@ -1,0 +1,31 @@
+what is react?
+-> React is a Js library for building user interfaces using resuable components.
+
+
+Why use vite?
+-> Vite has faster build times and lighter setup.
+
+
+rafce -> React Arrow Function Component with Export default
+
+what is JSX?
+-> Javascript XML - its a syntax extension that allows us to write html like code inside Js
+-> React uses babel for understanding(convert) JSX 
+
+
+Rules of JSX
+1. JSX must return a single root element. either wrap then in div or <> </> (fragment).
+2. Use className insted of class (clss is a reserved keyword in js)
+3. self closing tags must have slash at the end (eg. <img src ="" />).
+4. Whenever you create a .jsx component the first letter should be capital
+5. Inline styling in components are in a object format with key value pairs
+
+
+Prop->
+->Prop are like function parameters for components- they allow you to pass data data form parent to child
+->Prop has one way data flow
+->Prop can be of any Datatype: string, number, array, obj, function and JSX
+->A child cannot directly modify the parent Prop that is prop is a read only element
+-> The children key- word is reserved for passing html data as prop in a component
+
+

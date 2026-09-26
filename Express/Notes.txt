@@ -1,0 +1,26 @@
+// this is how we create a global middleware
+import express from "express"
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
+
+// this is how you start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+});
+
+
+
+fist install npm i express
+then npm i nodemon
+then add   "type": "module",  this in package.json
+make script like this in package.json:
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+
+
+
+Note: If the routes are same remember to keep the methods different, if both are same them the 1st route is created only hits

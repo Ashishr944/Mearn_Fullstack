@@ -1,0 +1,61 @@
+UseEffects
+-> the UseEffects hook allow you to perform side effects in your components.
+{useEffect is component property}
+SideEffects:
+defetching
+calculation
+clean up
+
+
+
+
+Rendering Process                             SideEffects
+__________________________________________________________________________
+Mounting
+-> componentDidMount                          Show Current title
+
+Updating                                      Update Title
+-> componentDidUpdate
+
+Unmounting                                    Clear ongoing effects
+-> componentWillUnmount 
+
+
+
+
+
+Life cycle method
+Mounting
+Updating
+Unmounting
+
+
+Note: Do not forget to specify the dependency array in useEffect, bc that is what determines
+// how the sideEffects are performed
+
+
+// componentDidMount
+    // useEffect(() =>{
+    //     console.log("perform this sideEffect when component is mounted on the screen")
+    // },[])
+
+// ComponentDidUpdate
+    // useEffect(() =>{
+    //     console.log("perform this sideEffect when component is mounted on the screen")
+    // },[count])
+
+// ComponentWillUnmount
+    useEffect(() => {
+        return () => {
+            console.log("performing this sideEffect when component is removed from the screen")
+        }
+    },[])
+
+
+
+Note: Prop came from parent
+never update the same state inside useEffect which is specified in the dependency array
+-> the below will keep running
+
+
+Race condition

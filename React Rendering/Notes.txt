@@ -1,0 +1,53 @@
+why is real DOM in expencive
+-> DOM operations are relatively slow bc:
+    1. Browser must update the DOM tree
+    2. Browser recalculates styles
+    3. Browser replicates laylot
+    4. Browser repaints pixels on sreen
+
+
+
+
+Vitual DOM
+-> Its a lightweight JS representation of real DOM
+-> Instead of immediatly changing the browser DOm, React creates a virual Copy
+
+working of VDOM
+    1. <h1>Hello<h1>
+
+    2. React creates a Copy
+        {
+            type: "h1"
+            children: ["Hello"]
+        }
+
+    3. Later the State changes react creates a new BDOM
+        {
+            type: "hi"
+            children: ["hello world"]
+        }
+
+    4. The 2 DOM's that are created are now compared -> it detects that the next " hello" changes to "hello World"
+
+    5. It will only update that particular part of the Real DOM
+
+
+
+
+
+Diffing->
+It is process where the Two DOMs are compare with each other to find the difference between them
+
+Reconciliation -> Its and algorithm that react use to update the Real DOm
+
+
+# FUll Rendering process
+State changes -> New VDOM-> Diffing -> Reconciliation -> Real DOm (changes reflected)
+
+
+
+React Fibre -> is the internal reconciliation engine and core architectural rewrite introduced in React 16
+
+
+Note -> the key value should be uniwue for the elements that are repeating of maped using a list
+these key value should be fixed to that element that is avoid using index of the array as the key for that element

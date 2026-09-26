@@ -31,35 +31,6 @@
 
 
 
-const p1 = Promise.resolve("Apple");
-const p2 = Promise.resolve("Banana");
-const p3 = Promise.resolve("Mango");
-
-Promise.all([p1,p2,p3]).then((result)=>{
-    console.log(result);
-}).catch((error) =>{
-    console.log(error);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

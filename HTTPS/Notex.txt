@@ -1,0 +1,19 @@
+for client 
+creat client project by
+npm create vite@latest
+
+install axios
+npm i axios
+
+
+
+
+for server
+
+install
+npm i cors
+
+
+app.use(cors({
+    origin: "http://localhost:5173" // giving access to my react project
+}))

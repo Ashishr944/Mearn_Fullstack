@@ -184,10 +184,12 @@ const todos = [
 
 ]
 
-// GET - get all todos
-// app.get("/todo", (req, res) => {
-//     res.json(todos);
-// });
+app.get("/todo", (req, res) => {
+  res.status(200).json({
+    data: todos,
+    message: "Todos fetched successfully",
+  });
+});
 
 // Ouput:[
 //     {
@@ -213,23 +215,36 @@ const todos = [
 // ]
 
 
-// POST - create a todo
-// app.post("/todo", (req, res) => {
-//     const { task } = req.body;
+// Create a todo
+app.post("/todo", (req, res) => {
+  const { task, completed = false } = req.body;
 
-//     const newTodo = {
-//         id: todos.length > 0
-//             ? Math.max(...todos.map(todo => todo.id)) + 1
-//             : 100,
-//         task,
-//         complete: false
-//     };
+  if (!task || typeof task !== "string" || task.trim() === "") {
+    return res.status(400).json({
+      message: "Task is required and must be a non-empty string",
+    });
+  }
 
-//     todos.push(newTodo);
+  if (typeof completed !== "boolean") {
+    return res.status(400).json({
+      message: "Completed must be a boolean",
+    });
+  }
 
-//     res.status(201).json(newTodo);
-// });
+  const newTodo = {
+    id: todos.length > 0
+      ? Math.max(...todos.map((todo) => todo.id)) + 1
+      : 100,
+    task: task.trim(),
+    completed,
+  };
+todos.push(newTodo);
 
+  res.status(201).json({
+    data: newTodo,
+    message: "Todo created successfully",
+  });
+});
 
 //body input:
 // {
@@ -247,21 +262,30 @@ const todos = [
 // }
 
 // PATCH - toggle completed
-// app.patch("/todo/toggle-completed/:id", (req, res) => {
-//     const { id } = req.params;
+app.patch("/todo/toggle-completed/:id", (req, res) => {
+  const id = Number(req.params.id);
 
-//     const todo = todos.find(todo => todo.id == id);
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      message: "Todo ID must be a number",
+    });
+  }
 
-//     if (!todo) {
-//         return res.status(404).send("Todo does not exist");
-//     }
+  const todo = todos.find((todo) => todo.id === id);
 
-//     todo.complete = !todo.complete;
+  if (!todo) {
+    return res.status(404).json({
+      message: "Todo not found",
+    });
+  }
 
-//     res.json(todo);
-// });
+  todo.completed = !todo.completed;
 
-
+  res.status(200).json({
+    data: todo,
+    message: "Todo completed status toggled successfully",
+  });
+});
 // Before:
 
 // {
@@ -278,26 +302,52 @@ const todos = [
 // }
 
 // PUT - edit todo
-// app.put("/todo/:id", (req, res) => {
-//     const { id } = req.params;
-//     const { task, complete } = req.body;
+app.put("/todo/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const { task, completed } = req.body;
 
-//     const index = todos.findIndex(todo => todo.id == id);
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      message: "Todo ID must be a number",
+    });
+  }
 
-//     if (index === -1) {
-//         return res.status(404).send("Todo does not exist");
-//     }
+  const todo = todos.find((todo) => todo.id === id);
 
-//     const updatedTodo = {
-//         id: Number(id),
-//         task,
-//         complete
-//     };
+  if (!todo) {
+    return res.status(404).json({
+      message: "Todo not found",
+    });
+  }
 
-//     todos[index] = updatedTodo;
+  if (
+    task !== undefined &&
+    (typeof task !== "string" || task.trim() === "")
+  ) {
+    return res.status(400).json({
+      message: "Task must be a non-empty string",
+    });
+  }
 
-//     res.json(updatedTodo);
-// });
+  if (completed !== undefined && typeof completed !== "boolean") {
+    return res.status(400).json({
+      message: "Completed must be a boolean",
+    });
+  }
+
+  if (task !== undefined) {
+    todo.task = task.trim();
+  }
+
+  if (completed !== undefined) {
+    todo.completed = completed;
+  }
+
+  res.status(200).json({
+    data: todo,
+    message: "Todo updated successfully",
+  });
+});
 
 // Body:
 // {
@@ -314,24 +364,30 @@ const todos = [
 
 
 // DELETE - delete todo
-// app.delete("/todo/:id", (req, res) => {
-//     const { id } = req.params;
+app.delete("/todo/:id", (req, res) => {
+  const id = Number(req.params.id);
 
-//     const index = todos.findIndex(todo => todo.id == id);
+  if (Number.isNaN(id)) {
+    return res.status(400).json({
+      message: "Todo ID must be a number",
+    });
+  }
 
-//     if (index === -1) {
-//         return res.status(404).send("Todo does not exist");
-//     }
+  const todoIndex = todos.findIndex((todo) => todo.id === id);
 
-//     todos.splice(index, 1);
+  if (todoIndex === -1) {
+    return res.status(404).json({
+      message: "Todo not found",
+    });
+  }
 
-//     res.json({
-//         message: "Todo deleted successfully",
-//         todos
-//     });
-// });
+  const deletedTodo = todos.splice(todoIndex, 1)[0];
 
-
+  res.status(200).json({
+    data: deletedTodo,
+    message: "Todo deleted successfully",
+  });
+});
 // ouput:
 // {
 //     "message": "Todo deleted successfully",

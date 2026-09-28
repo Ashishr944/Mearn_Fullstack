@@ -1,0 +1,13 @@
+Sql-
+1. Relational(sql)
+-> structure query language
+-> 
+
+
+3. Non Relational (no sql)
+-> In the form of object like array
+
+
+PRIMARY KEY
+FOREIN KEY
+ALL METHODS

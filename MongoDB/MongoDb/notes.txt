@@ -1,0 +1,43 @@
+first step ->
+npm init
+
+next->
+npm i express dotenv mongoose
+
+
+change package.json where->
+it should look like this:
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "mongoose": "^9.10.3"
+  }
+}
+
+
+next ->
+create db.js
+create index.js
+create .env
+
+-> add this in .env -> MONGO_URL = "mongodb+srv://ashishrokade190_db_user:OdKx0ITGZk3UM1Z1@cluster0.kbb7fja.mongodb.net";
+
+
+
+Open security in cloud.mongodb.com
+go to security
+go to database and network and add Ip address -> 0.0.0.0/0

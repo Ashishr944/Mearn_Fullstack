@@ -1,0 +1,25 @@
+First go to serve folder and install npm i mongoose
+2. create .env in server and add ->
+MONGO_URL = "mongodb+srv://ashishrokade190_db_user:OdKx0ITGZk3UM1Z1@cluster0.kbb7fja.mongodb.net"
+PORT = 3000
+
+3.create Db.js
+4. Then export db.js in index.js
+
+5. run this in server folder -> chmod +x node_modules/.bin/nodemon
+
+6. Create folder in  server ->
+ a. Controllers
+ b. Model
+ C. Routes
+
+
+7. Create todomodels.js in Models folder
+
+8. Create todoControllers.js in Controllers folder
+
+9. Create todoRoutes.js in Routes folder then export all todoControllers in this file
+10. Import express in todoRoutes
+
+
+11. Import router.js in index.js
